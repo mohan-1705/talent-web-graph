@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellGraphRouteImport } from './routes/_shell.graph'
+import { Route as ShellRecommendationsRouteImport } from './routes/_shell.recommendations'
 import { Route as ShellSkillsRouteImport } from './routes/_shell.skills'
 import { Route as ShellJobsIndexRouteImport } from './routes/_shell.jobs.index'
 import { Route as ShellJobsJobIdRouteImport } from './routes/_shell.jobs.$jobId'
@@ -28,6 +30,16 @@ const ShellRoute = ShellRouteImport.update({
 const ShellDashboardRoute = ShellDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellGraphRoute = ShellGraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellRecommendationsRoute = ShellRecommendationsRouteImport.update({
+  id: '/recommendations',
+  path: '/recommendations',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellSkillsRoute = ShellSkillsRouteImport.update({
@@ -49,6 +61,8 @@ const ShellJobsJobIdRoute = ShellJobsJobIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/graph': typeof ShellGraphRoute
+  '/recommendations': typeof ShellRecommendationsRoute
   '/skills': typeof ShellSkillsRoute
   '/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/jobs/': typeof ShellJobsIndexRoute
@@ -56,6 +70,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/graph': typeof ShellGraphRoute
+  '/recommendations': typeof ShellRecommendationsRoute
   '/skills': typeof ShellSkillsRoute
   '/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/jobs': typeof ShellJobsIndexRoute
@@ -65,20 +81,38 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/graph': typeof ShellGraphRoute
+  '/_shell/recommendations': typeof ShellRecommendationsRoute
   '/_shell/skills': typeof ShellSkillsRoute
   '/_shell/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/_shell/jobs/': typeof ShellJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/skills' | '/jobs/$jobId' | '/jobs/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/graph'
+    | '/recommendations'
+    | '/skills'
+    | '/jobs/$jobId'
+    | '/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/skills' | '/jobs/$jobId' | '/jobs'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/graph'
+    | '/recommendations'
+    | '/skills'
+    | '/jobs/$jobId'
+    | '/jobs'
   id:
     | '__root__'
     | '/'
     | '/_shell'
     | '/_shell/dashboard'
+    | '/_shell/graph'
+    | '/_shell/recommendations'
     | '/_shell/skills'
     | '/_shell/jobs/$jobId'
     | '/_shell/jobs/'
@@ -112,6 +146,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellDashboardRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/graph': {
+      id: '/_shell/graph'
+      path: '/graph'
+      fullPath: '/graph'
+      preLoaderRoute: typeof ShellGraphRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/recommendations': {
+      id: '/_shell/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof ShellRecommendationsRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/skills': {
       id: '/_shell/skills'
       path: '/skills'
@@ -138,6 +186,8 @@ declare module '@tanstack/react-router' {
 
 interface ShellRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellGraphRoute: typeof ShellGraphRoute
+  ShellRecommendationsRoute: typeof ShellRecommendationsRoute
   ShellSkillsRoute: typeof ShellSkillsRoute
   ShellJobsJobIdRoute: typeof ShellJobsJobIdRoute
   ShellJobsIndexRoute: typeof ShellJobsIndexRoute
@@ -145,6 +195,8 @@ interface ShellRouteChildren {
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellGraphRoute: ShellGraphRoute,
+  ShellRecommendationsRoute: ShellRecommendationsRoute,
   ShellSkillsRoute: ShellSkillsRoute,
   ShellJobsJobIdRoute: ShellJobsJobIdRoute,
   ShellJobsIndexRoute: ShellJobsIndexRoute,
