@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellSkillsRouteImport } from './routes/_shell.skills'
 import { Route as ShellJobsIndexRouteImport } from './routes/_shell.jobs.index'
+import { Route as ShellJobsJobIdRouteImport } from './routes/_shell.jobs.$jobId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,20 +30,34 @@ const ShellDashboardRoute = ShellDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellSkillsRoute = ShellSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellJobsIndexRoute = ShellJobsIndexRouteImport.update({
   id: '/jobs/',
   path: '/jobs/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellJobsJobIdRoute = ShellJobsJobIdRouteImport.update({
+  id: '/jobs/$jobId',
+  path: '/jobs/$jobId',
   getParentRoute: () => ShellRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/skills': typeof ShellSkillsRoute
+  '/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/jobs/': typeof ShellJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/skills': typeof ShellSkillsRoute
+  '/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/jobs': typeof ShellJobsIndexRoute
 }
 export interface FileRoutesById {
@@ -49,14 +65,23 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/skills': typeof ShellSkillsRoute
+  '/_shell/jobs/$jobId': typeof ShellJobsJobIdRoute
   '/_shell/jobs/': typeof ShellJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/jobs/'
+  fullPaths: '/' | '/dashboard' | '/skills' | '/jobs/$jobId' | '/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/jobs'
-  id: '__root__' | '/' | '/_shell' | '/_shell/dashboard' | '/_shell/jobs/'
+  to: '/' | '/dashboard' | '/skills' | '/jobs/$jobId' | '/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/dashboard'
+    | '/_shell/skills'
+    | '/_shell/jobs/$jobId'
+    | '/_shell/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +112,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellDashboardRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/skills': {
+      id: '/_shell/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof ShellSkillsRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/jobs/': {
       id: '/_shell/jobs/'
       path: '/jobs'
@@ -94,16 +126,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellJobsIndexRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/jobs/$jobId': {
+      id: '/_shell/jobs/$jobId'
+      path: '/jobs/$jobId'
+      fullPath: '/jobs/$jobId'
+      preLoaderRoute: typeof ShellJobsJobIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
 interface ShellRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellSkillsRoute: typeof ShellSkillsRoute
+  ShellJobsJobIdRoute: typeof ShellJobsJobIdRoute
   ShellJobsIndexRoute: typeof ShellJobsIndexRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellSkillsRoute: ShellSkillsRoute,
+  ShellJobsJobIdRoute: ShellJobsJobIdRoute,
   ShellJobsIndexRoute: ShellJobsIndexRoute,
 }
 
