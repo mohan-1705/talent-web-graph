@@ -10,33 +10,165 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellGraphRouteImport } from './routes/_shell.graph'
+import { Route as ShellProfileRouteImport } from './routes/_shell.profile'
+import { Route as ShellRecommendationsRouteImport } from './routes/_shell.recommendations'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
+import { Route as ShellSkillsRouteImport } from './routes/_shell.skills'
+import { Route as ShellCompaniesIndexRouteImport } from './routes/_shell.companies.index'
+import { Route as ShellCompaniesCompanyIdRouteImport } from './routes/_shell.companies.$companyId'
+import { Route as ShellJobsIndexRouteImport } from './routes/_shell.jobs.index'
+import { Route as ShellJobsJobIdRouteImport } from './routes/_shell.jobs.$jobId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellDashboardRoute = ShellDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellGraphRoute = ShellGraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProfileRoute = ShellProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellRecommendationsRoute = ShellRecommendationsRouteImport.update({
+  id: '/recommendations',
+  path: '/recommendations',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSkillsRoute = ShellSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellCompaniesIndexRoute = ShellCompaniesIndexRouteImport.update({
+  id: '/companies/',
+  path: '/companies/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellCompaniesCompanyIdRoute = ShellCompaniesCompanyIdRouteImport.update({
+  id: '/companies/$companyId',
+  path: '/companies/$companyId',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellJobsIndexRoute = ShellJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellJobsJobIdRoute = ShellJobsJobIdRouteImport.update({
+  id: '/jobs/$jobId',
+  path: '/jobs/$jobId',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/graph': typeof ShellGraphRoute
+  '/profile': typeof ShellProfileRoute
+  '/recommendations': typeof ShellRecommendationsRoute
+  '/settings': typeof ShellSettingsRoute
+  '/skills': typeof ShellSkillsRoute
+  '/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
+  '/jobs/$jobId': typeof ShellJobsJobIdRoute
+  '/companies/': typeof ShellCompaniesIndexRoute
+  '/jobs/': typeof ShellJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/graph': typeof ShellGraphRoute
+  '/profile': typeof ShellProfileRoute
+  '/recommendations': typeof ShellRecommendationsRoute
+  '/settings': typeof ShellSettingsRoute
+  '/skills': typeof ShellSkillsRoute
+  '/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
+  '/jobs/$jobId': typeof ShellJobsJobIdRoute
+  '/companies': typeof ShellCompaniesIndexRoute
+  '/jobs': typeof ShellJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/graph': typeof ShellGraphRoute
+  '/_shell/profile': typeof ShellProfileRoute
+  '/_shell/recommendations': typeof ShellRecommendationsRoute
+  '/_shell/settings': typeof ShellSettingsRoute
+  '/_shell/skills': typeof ShellSkillsRoute
+  '/_shell/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
+  '/_shell/jobs/$jobId': typeof ShellJobsJobIdRoute
+  '/_shell/companies/': typeof ShellCompaniesIndexRoute
+  '/_shell/jobs/': typeof ShellJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/graph'
+    | '/profile'
+    | '/recommendations'
+    | '/settings'
+    | '/skills'
+    | '/companies/$companyId'
+    | '/jobs/$jobId'
+    | '/companies/'
+    | '/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/graph'
+    | '/profile'
+    | '/recommendations'
+    | '/settings'
+    | '/skills'
+    | '/companies/$companyId'
+    | '/jobs/$jobId'
+    | '/companies'
+    | '/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/dashboard'
+    | '/_shell/graph'
+    | '/_shell/profile'
+    | '/_shell/recommendations'
+    | '/_shell/settings'
+    | '/_shell/skills'
+    | '/_shell/companies/$companyId'
+    | '/_shell/jobs/$jobId'
+    | '/_shell/companies/'
+    | '/_shell/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +180,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/dashboard': {
+      id: '/_shell/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ShellDashboardRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/graph': {
+      id: '/_shell/graph'
+      path: '/graph'
+      fullPath: '/graph'
+      preLoaderRoute: typeof ShellGraphRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/profile': {
+      id: '/_shell/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ShellProfileRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/recommendations': {
+      id: '/_shell/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof ShellRecommendationsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/skills': {
+      id: '/_shell/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof ShellSkillsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/companies/': {
+      id: '/_shell/companies/'
+      path: '/companies'
+      fullPath: '/companies/'
+      preLoaderRoute: typeof ShellCompaniesIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/companies/$companyId': {
+      id: '/_shell/companies/$companyId'
+      path: '/companies/$companyId'
+      fullPath: '/companies/$companyId'
+      preLoaderRoute: typeof ShellCompaniesCompanyIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/jobs/': {
+      id: '/_shell/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof ShellJobsIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/jobs/$jobId': {
+      id: '/_shell/jobs/$jobId'
+      path: '/jobs/$jobId'
+      fullPath: '/jobs/$jobId'
+      preLoaderRoute: typeof ShellJobsJobIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellRouteChildren {
+  ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellGraphRoute: typeof ShellGraphRoute
+  ShellProfileRoute: typeof ShellProfileRoute
+  ShellRecommendationsRoute: typeof ShellRecommendationsRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
+  ShellSkillsRoute: typeof ShellSkillsRoute
+  ShellCompaniesCompanyIdRoute: typeof ShellCompaniesCompanyIdRoute
+  ShellJobsJobIdRoute: typeof ShellJobsJobIdRoute
+  ShellCompaniesIndexRoute: typeof ShellCompaniesIndexRoute
+  ShellJobsIndexRoute: typeof ShellJobsIndexRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellDashboardRoute: ShellDashboardRoute,
+  ShellGraphRoute: ShellGraphRoute,
+  ShellProfileRoute: ShellProfileRoute,
+  ShellRecommendationsRoute: ShellRecommendationsRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
+  ShellSkillsRoute: ShellSkillsRoute,
+  ShellCompaniesCompanyIdRoute: ShellCompaniesCompanyIdRoute,
+  ShellJobsJobIdRoute: ShellJobsJobIdRoute,
+  ShellCompaniesIndexRoute: ShellCompaniesIndexRoute,
+  ShellJobsIndexRoute: ShellJobsIndexRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
