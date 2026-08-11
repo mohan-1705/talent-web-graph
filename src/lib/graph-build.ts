@@ -109,7 +109,7 @@ export function buildCareerGraph({
         id: j.id,
         type: "graphNode",
         position: pos[i]!,
-        data: { label: j.title, type: "Job", sub: j.location.split(",")[0], refId: j.id },
+        data: { label: j.title, type: "Job", sub: j.location.split(",")[0] ?? j.location, refId: j.id },
       });
       if (showSkill) {
         j.skillIds
