@@ -13,7 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellGraphRouteImport } from './routes/_shell.graph'
+import { Route as ShellProfileRouteImport } from './routes/_shell.profile'
 import { Route as ShellRecommendationsRouteImport } from './routes/_shell.recommendations'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
 import { Route as ShellSkillsRouteImport } from './routes/_shell.skills'
 import { Route as ShellCompaniesIndexRouteImport } from './routes/_shell.companies.index'
 import { Route as ShellCompaniesCompanyIdRouteImport } from './routes/_shell.companies.$companyId'
@@ -39,9 +41,19 @@ const ShellGraphRoute = ShellGraphRouteImport.update({
   path: '/graph',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellProfileRoute = ShellProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellRecommendationsRoute = ShellRecommendationsRouteImport.update({
   id: '/recommendations',
   path: '/recommendations',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellSkillsRoute = ShellSkillsRouteImport.update({
@@ -74,7 +86,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
   '/graph': typeof ShellGraphRoute
+  '/profile': typeof ShellProfileRoute
   '/recommendations': typeof ShellRecommendationsRoute
+  '/settings': typeof ShellSettingsRoute
   '/skills': typeof ShellSkillsRoute
   '/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
   '/jobs/$jobId': typeof ShellJobsJobIdRoute
@@ -85,7 +99,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
   '/graph': typeof ShellGraphRoute
+  '/profile': typeof ShellProfileRoute
   '/recommendations': typeof ShellRecommendationsRoute
+  '/settings': typeof ShellSettingsRoute
   '/skills': typeof ShellSkillsRoute
   '/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
   '/jobs/$jobId': typeof ShellJobsJobIdRoute
@@ -98,7 +114,9 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/graph': typeof ShellGraphRoute
+  '/_shell/profile': typeof ShellProfileRoute
   '/_shell/recommendations': typeof ShellRecommendationsRoute
+  '/_shell/settings': typeof ShellSettingsRoute
   '/_shell/skills': typeof ShellSkillsRoute
   '/_shell/companies/$companyId': typeof ShellCompaniesCompanyIdRoute
   '/_shell/jobs/$jobId': typeof ShellJobsJobIdRoute
@@ -111,7 +129,9 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/graph'
+    | '/profile'
     | '/recommendations'
+    | '/settings'
     | '/skills'
     | '/companies/$companyId'
     | '/jobs/$jobId'
@@ -122,7 +142,9 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/graph'
+    | '/profile'
     | '/recommendations'
+    | '/settings'
     | '/skills'
     | '/companies/$companyId'
     | '/jobs/$jobId'
@@ -134,7 +156,9 @@ export interface FileRouteTypes {
     | '/_shell'
     | '/_shell/dashboard'
     | '/_shell/graph'
+    | '/_shell/profile'
     | '/_shell/recommendations'
+    | '/_shell/settings'
     | '/_shell/skills'
     | '/_shell/companies/$companyId'
     | '/_shell/jobs/$jobId'
@@ -177,11 +201,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellGraphRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/profile': {
+      id: '/_shell/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ShellProfileRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/recommendations': {
       id: '/_shell/recommendations'
       path: '/recommendations'
       fullPath: '/recommendations'
       preLoaderRoute: typeof ShellRecommendationsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/skills': {
@@ -225,7 +263,9 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellGraphRoute: typeof ShellGraphRoute
+  ShellProfileRoute: typeof ShellProfileRoute
   ShellRecommendationsRoute: typeof ShellRecommendationsRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
   ShellSkillsRoute: typeof ShellSkillsRoute
   ShellCompaniesCompanyIdRoute: typeof ShellCompaniesCompanyIdRoute
   ShellJobsJobIdRoute: typeof ShellJobsJobIdRoute
@@ -236,7 +276,9 @@ interface ShellRouteChildren {
 const ShellRouteChildren: ShellRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
   ShellGraphRoute: ShellGraphRoute,
+  ShellProfileRoute: ShellProfileRoute,
   ShellRecommendationsRoute: ShellRecommendationsRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
   ShellSkillsRoute: ShellSkillsRoute,
   ShellCompaniesCompanyIdRoute: ShellCompaniesCompanyIdRoute,
   ShellJobsJobIdRoute: ShellJobsJobIdRoute,
